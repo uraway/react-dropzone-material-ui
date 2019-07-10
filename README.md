@@ -2,7 +2,7 @@
 
 Try example: https://uraway.github.io/react-dropzone-material-ui
 
-This is a [Material-UI](https://material-ui.com/) React component based on [react-dropzone](https://github.com/react-dropzone/react-dropzone).
+This is a React component based on [react-dropzone](https://github.com/react-dropzone/react-dropzone) and [Material-UI](https://material-ui.com/).
 
 ![image](https://user-images.githubusercontent.com/15242484/60936510-e7278d80-a2ff-11e9-959b-8679f5350132.png)
 
@@ -39,14 +39,14 @@ export default App;
 
 Currently supports only few props:
 
-| Name          | Type     | Default                                    | Description                                                                                                                                                                                    |
-| ------------- | -------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| acceptedFiles | string[] | ["image/*", "video/*", "application/*"]    | A list of file mime types user can add into the dropzone. ref: [Unique file type specifiers](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Unique_file_type_specifiers) |
-| dropzoneText  | string   | ファイルをドロップまたはファイルを選択する | Text in the dropzone.                                                                                                                                                                          |
-| errorMessages |          |                                            | see [errorMessages](#errorMessages) section below.                                                                                                                                             |
-| filesLimit    | number   | 3                                          | Number of files user can add into the dropzone.                                                                                                                                                |
-| maxFileSize   | number   | 3000000                                    | Maximum file size in bytes user can add into the dropzone.                                                                                                                                     |
-| onChange      | func     |                                            | Callback function filred when a file is dropped, selected or deleted.  `function(files: File[]) => void`                                                                                       |
+| Name          | Type     | Default                                      | Description                                                                                                                                                                                    |
+| ------------- | -------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| acceptedFiles | string[] | ["image/*", "video/*", "application/*"]      | A list of file mime types user can add into the dropzone. ref: [Unique file type specifiers](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Unique_file_type_specifiers) |
+| dropzoneText  | string   | "ファイルをドロップまたはファイルを選択する" | Text in the dropzone.                                                                                                                                                                          |
+| errorMessages |          |                                              | see [errorMessages](#errorMessages) section below.                                                                                                                                             |
+| filesLimit    | number   | 3                                            | Number of files user can add into the dropzone.                                                                                                                                                |
+| maxFileSize   | number   | 3000000                                      | Maximum file size in bytes user can add into the dropzone.                                                                                                                                     |
+| onChange      | func     |                                              | Callback function filred when a file is dropped, selected or deleted.  `function(files: File[]) => void`                                                                                       |
 
 <!--
 disable preview
