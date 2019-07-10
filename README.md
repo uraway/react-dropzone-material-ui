@@ -1,44 +1,74 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# react-dropzone-material-ui
 
-## Available Scripts
+Try example: https://uraway.github.io/react-dropzone-material-ui
 
-In the project directory, you can run:
+This is a [Material-UI](https://material-ui.com/) React component based on [react-dropzone](https://github.com/react-dropzone/react-dropzone).
 
-### `npm start`
+![image](https://user-images.githubusercontent.com/15242484/60936510-e7278d80-a2ff-11e9-959b-8679f5350132.png)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Install
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+```
+yarn add react-dropzone-material-ui
+```
 
-### `npm test`
+## Usage
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```jsx
+import React, { useState, useEffect } from "react";
+import DropzoneArea from "react-dropzone-material-ui";
 
-### `npm run build`
+const App: React.FC = () => {
+  const [files, setFiles] = useState<File[]>([]);
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  useEffect(() => {
+    console.log(files);
+  }, [files]);
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+  return (
+    <div className="App">
+      <DropzoneArea onChange={setFiles} />
+    </div>
+  );
+};
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export default App;
+```
 
-### `npm run eject`
+## Props
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Currently supports only few props:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Name          | Type     | Default                                    | Description                                                                                                                                                                                    |
+| ------------- | -------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| acceptedFiles | string[] | ["image/*", "video/*", "application/*"]    | A list of file mime types user can add into the dropzone. ref: [Unique file type specifiers](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Unique_file_type_specifiers) |
+| dropzoneText  | string   | ファイルをドロップまたはファイルを選択する | Text in the dropzone.                                                                                                                                                                          |
+| errorMessages |          |                                            | see [errorMessages](#errorMessages) section below.                                                                                                                                             |
+| filesLimit    | number   | 3                                          | Number of files user can add into the dropzone.                                                                                                                                                |
+| maxFileSize   | number   | 3000000                                    | Maximum file size in bytes user can add into the dropzone.                                                                                                                                     |
+| onChange      | func     |                                            | Callback function filred when a file is dropped, selected or deleted.  `function(files: File[]) => void`                                                                                       |
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<!--
+disable preview
+disable window.alert
+-->
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## errorMessages
 
-## Learn More
+  You can change error messages with your own language by passing `errorMessges` property:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```jsx
+errorMessages={{
+  acceptedFiles: "File type is not supported.",
+  filesLimit: "Maximun number of files are exceeded.",
+  maxFileSize: "File size is too big."
+}}
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  When a file is rejected, window alert will be evoked with these texts:
+
+![image](https://user-images.githubusercontent.com/15242484/60937681-ded15180-a303-11e9-9360-b0a3cfda8d73.png)
+
+## License
+
+This project is licensed under the terms of the MIT license.

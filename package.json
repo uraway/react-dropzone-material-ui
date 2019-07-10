@@ -4,48 +4,39 @@
     "private": true,
     "homepage": "https://uraway.github.io/react-dropzone-material-ui",
     "dependencies": {
-        "@material-ui/core": "^4.2.0",
         "@material-ui/icons": "^4.2.1",
         "react-dropzone": "^10.1.5"
     },
     "scripts": {
-        "predeploy": "yarn run build",
-        "deploy": "gh-pages -d build",
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "compile": "NODE_ENV=production babel src --out-dir lib --copy-files"
+        "build": "rollup -c",
+        "build-watch": "rollup -c -w",
+        "install-all": "yarn install && cd example && yarn install",
+        "start-example": "cd example && yarn start",
+        "deploy-example": "cd example && yarn run deploy",
+        "dev": "concurrently --kill-others \"yarn run build-watch\" \"yarn run start-example\"",
+        "test": "ts-node test/test.ts",
+        "pretest": "yarn run build"
     },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
+    "main": "dist/index.cjs.js",
+    "module": "dist/index.esm.js",
+    "files": [
+        "dist"
+    ],
+    "types": "dist/index.d.ts",
     "devDependencies": {
-        "@babel/cli": "^7.5.0",
-        "@babel/preset-react": "^7.0.0",
+        "@material-ui/core": "^4.2.0",
         "@types/jest": "24.0.15",
         "@types/node": "12.6.1",
         "@types/react": "16.8.23",
         "@types/react-dom": "16.8.4",
-        "gh-pages": "^2.0.1",
-        "react": "^16.8.6",
-        "react-dom": "^16.8.6",
+        "concurrently": "^4.1.1",
         "react-scripts": "3.0.1",
+        "rollup": "^1.16.7",
+        "rollup-plugin-typescript2": "^0.21.2",
         "typescript": "3.5.3"
     },
     "peerDependencies": {
+        "@material-ui/core": "^4.2.0",
         "react": "^16.0.0",
         "react-dom": "^16.0.0"
     }

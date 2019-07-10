@@ -13,12 +13,11 @@ interface Props {
   filesLimit: number;
   acceptedFiles: string[];
   maxFileSize: number;
-  multiple: boolean;
   dropzoneText: string;
   errorMessages: {
+    acceptedFiles: string;
     filesLimit: string;
-    fileSize: string;
-    fileType: string;
+    maxFileSize: string;
   };
 }
 
@@ -87,7 +86,6 @@ function DropzoneArea({
   maxFileSize,
   acceptedFiles,
   filesLimit,
-  multiple,
   errorMessages,
   dropzoneText
 }: Props) {
@@ -95,7 +93,7 @@ function DropzoneArea({
   const [files, setFiles] = useState<ExtendedFile[]>([]);
 
   const handleDelete = (index: number) => () => {
-    const newFiles = files.filter((f, i) => i !== index);
+    const newFiles = files.filter((_f, i) => i !== index);
     onDrop(newFiles);
   };
 
@@ -118,10 +116,10 @@ function DropzoneArea({
     let message = "";
     rejectedFiles.forEach(rejectedFile => {
       if (!acceptedFiles.includes(rejectedFile.type)) {
-        message += errorMessages.fileType;
+        message += errorMessages.acceptedFiles;
       }
       if (rejectedFile.size > maxFileSize) {
-        message += errorMessages.fileSize;
+        message += errorMessages.maxFileSize;
       }
     });
     alert(message);
@@ -140,7 +138,6 @@ function DropzoneArea({
       onDropRejected={handleDropRejected}
       maxSize={maxFileSize}
       accept={acceptedFiles}
-      multiple={multiple}
     >
       {({
         getRootProps,
@@ -188,12 +185,10 @@ DropzoneArea.defaultProps = {
   acceptedFiles: ["image/*", "video/*", "application/*"],
   filesLimit: 3,
   maxFileSize: 3000000,
-  multiple: false,
-  onChange: () => {},
   errorMessages: {
+    acceptedFiles: "ファイル形式をサポートしていません。",
     filesLimit: "最大ファイル数を超えています。",
-    fileSize: "ファイル形式をサポートしていません。",
-    fileType: "ファイルサイズが大きすぎます。"
+    maxFileSize: "ファイルサイズが大きすぎます。"
   },
   dropzoneText: "ファイルをドロップまたはファイルを選択する"
 };
