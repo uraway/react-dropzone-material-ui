@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/react-dropzone-material-ui/static/css/main.19393e92.chunk.css",
-    "main.js": "/react-dropzone-material-ui/static/js/main.34e4d5d0.chunk.js",
-    "main.js.map": "/react-dropzone-material-ui/static/js/main.34e4d5d0.chunk.js.map",
+    "main.js": "/react-dropzone-material-ui/static/js/main.4681ae9d.chunk.js",
+    "main.js.map": "/react-dropzone-material-ui/static/js/main.4681ae9d.chunk.js.map",
     "runtime~main.js": "/react-dropzone-material-ui/static/js/runtime~main.c4435efc.js",
     "runtime~main.js.map": "/react-dropzone-material-ui/static/js/runtime~main.c4435efc.js.map",
-    "static/js/2.d48822b5.chunk.js": "/react-dropzone-material-ui/static/js/2.d48822b5.chunk.js",
-    "static/js/2.d48822b5.chunk.js.map": "/react-dropzone-material-ui/static/js/2.d48822b5.chunk.js.map",
+    "static/js/2.197a9e39.chunk.js": "/react-dropzone-material-ui/static/js/2.197a9e39.chunk.js",
+    "static/js/2.197a9e39.chunk.js.map": "/react-dropzone-material-ui/static/js/2.197a9e39.chunk.js.map",
     "index.html": "/react-dropzone-material-ui/index.html",
-    "precache-manifest.094fd3fed43f94c4b1ceb0dd94f89cb4.js": "/react-dropzone-material-ui/precache-manifest.094fd3fed43f94c4b1ceb0dd94f89cb4.js",
+    "precache-manifest.95d833b3f7ddca83e4d6e44a5370fdeb.js": "/react-dropzone-material-ui/precache-manifest.95d833b3f7ddca83e4d6e44a5370fdeb.js",
     "service-worker.js": "/react-dropzone-material-ui/service-worker.js",
     "static/css/main.19393e92.chunk.css.map": "/react-dropzone-material-ui/static/css/main.19393e92.chunk.css.map"
   }
