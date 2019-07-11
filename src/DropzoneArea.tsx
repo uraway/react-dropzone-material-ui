@@ -1,4 +1,4 @@
-import { Badge } from "@material-ui/core";
+import { Badge, Typography } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import { Theme, makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -74,8 +74,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   removeBtn: {
     opacity: 0,
     transition: ".5s ease"
+  },
+  nopreview: {
+    alignItems: "center",
+    display: "flex"
   }
 }));
+
+const NO_PREVIEW = "no_preview";
 
 interface ExtendedFile extends File {
   preview: string;
@@ -105,7 +111,9 @@ function DropzoneArea({
     setFiles(
       newFiles.map(file =>
         Object.assign(file, {
-          preview: URL.createObjectURL(file)
+          preview: file.type.includes("image")
+            ? URL.createObjectURL(file)
+            : NO_PREVIEW
         })
       )
     );
@@ -131,6 +139,8 @@ function DropzoneArea({
     },
     [files]
   );
+
+  console.log(files);
 
   return (
     <Dropzone
@@ -167,7 +177,17 @@ function DropzoneArea({
               >
                 <div className={classes.thumb}>
                   <div className={classes.thumbInner}>
-                    <img src={file.preview} className={classes.img} />
+                    {file.preview === NO_PREVIEW ? (
+                      <Typography className={classes.nopreview} variant="h6">
+                        No Preview
+                      </Typography>
+                    ) : (
+                      <img
+                        src={file.preview}
+                        className={classes.img}
+                        alt="no preview"
+                      />
+                    )}
                   </div>
                 </div>
               </Badge>
