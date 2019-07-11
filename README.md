@@ -60,7 +60,7 @@ disable window.alert
 ```jsx
 errorMessages={{
   acceptedFiles: "File type is not supported.",
-  filesLimit: "Maximun number of files are exceeded.",
+  filesLimit: "Maximun number of files is exceeded.",
   maxFileSize: "File size is too big."
 }}
 ```
