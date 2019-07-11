@@ -140,8 +140,6 @@ function DropzoneArea({
     [files]
   );
 
-  console.log(files);
-
   return (
     <Dropzone
       onDrop={onDrop}

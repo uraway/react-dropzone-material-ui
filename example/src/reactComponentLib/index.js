@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Badge } from '@material-ui/core';
+import { Badge, Typography } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -85,8 +85,13 @@ var useStyles = makeStyles(function (theme) { return ({
     removeBtn: {
         opacity: 0,
         transition: ".5s ease"
+    },
+    nopreview: {
+        alignItems: "center",
+        display: "flex"
     }
 }); });
+var NO_PREVIEW = "no_preview";
 function DropzoneArea(_a) {
     var onChange = _a.onChange, maxFileSize = _a.maxFileSize, acceptedFiles = _a.acceptedFiles, filesLimit = _a.filesLimit, errorMessages = _a.errorMessages, dropzoneText = _a.dropzoneText;
     var classes = useStyles();
@@ -101,7 +106,9 @@ function DropzoneArea(_a) {
         }
         setFiles(newFiles.map(function (file) {
             return Object.assign(file, {
-                preview: URL.createObjectURL(file)
+                preview: file.type.includes("image")
+                    ? URL.createObjectURL(file)
+                    : NO_PREVIEW
             });
         }));
         onChange(newFiles);
@@ -130,8 +137,7 @@ function DropzoneArea(_a) {
             React.createElement("aside", { className: classes.thumbsContainer }, files.map(function (file, index) { return (React.createElement(Badge, { key: file.name, badgeContent: React.createElement(Fab, { size: "small", className: classes.removeBtn, onClick: handleDelete(index) },
                     React.createElement(DeleteIcon, null)) },
                 React.createElement("div", { className: classes.thumb },
-                    React.createElement("div", { className: classes.thumbInner },
-                        React.createElement("img", { src: file.preview, className: classes.img }))))); }))));
+                    React.createElement("div", { className: classes.thumbInner }, file.preview === NO_PREVIEW ? (React.createElement(Typography, { className: classes.nopreview, variant: "h6" }, "No Preview")) : (React.createElement("img", { src: file.preview, className: classes.img, alt: "no preview" })))))); }))));
     }));
 }
 DropzoneArea.defaultProps = {
@@ -145,6 +151,5 @@ DropzoneArea.defaultProps = {
     },
     dropzoneText: "ファイルをドロップまたはファイルを選択する"
 };
-//# sourceMappingURL=DropzoneArea.js.map
 
 export default DropzoneArea;
