@@ -145,7 +145,7 @@ function DropzoneArea({
       onDrop={onDrop}
       onDropRejected={handleDropRejected}
       maxSize={maxFileSize}
-      accept={acceptedFiles}
+      accept={acceptedFiles.join(',')}
     >
       {({
         getRootProps,
