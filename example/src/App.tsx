@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
 import DropzoneArea from "./reactComponentLib";
 import { Typography } from "@material-ui/core";
 
@@ -11,7 +10,7 @@ const App: React.FC = () => {
   }, [files]);
 
   return (
-    <div className="App">
+    <div>
       <Typography variant="h1">Sample</Typography>
       <DropzoneArea
         onChange={setFiles}

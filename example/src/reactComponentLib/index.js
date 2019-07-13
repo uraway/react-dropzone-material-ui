@@ -87,6 +87,7 @@ var useStyles = makeStyles(function (theme) { return ({
         transition: ".5s ease"
     },
     nopreview: {
+        textAlign: "center",
         alignItems: "center",
         display: "flex"
     }
@@ -128,7 +129,7 @@ function DropzoneArea(_a) {
     useEffect(function () { return function () {
         files.forEach(function (file) { return URL.revokeObjectURL(file.preview); });
     }; }, [files]);
-    return (React.createElement(Dropzone, { onDrop: onDrop, onDropRejected: handleDropRejected, maxSize: maxFileSize, accept: acceptedFiles }, function (_a) {
+    return (React.createElement(Dropzone, { onDrop: onDrop, onDropRejected: handleDropRejected, maxSize: maxFileSize, accept: acceptedFiles.join(",") }, function (_a) {
         var getRootProps = _a.getRootProps, getInputProps = _a.getInputProps;
         return (React.createElement("section", { className: classes.container },
             React.createElement("div", __assign({}, getRootProps({ className: classes.dropzone })),

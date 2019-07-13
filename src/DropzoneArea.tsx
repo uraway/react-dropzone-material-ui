@@ -76,6 +76,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     transition: ".5s ease"
   },
   nopreview: {
+    textAlign: "center",
     alignItems: "center",
     display: "flex"
   }
@@ -145,7 +146,7 @@ function DropzoneArea({
       onDrop={onDrop}
       onDropRejected={handleDropRejected}
       maxSize={maxFileSize}
-      accept={acceptedFiles}
+      accept={acceptedFiles.join(",")}
     >
       {({
         getRootProps,
