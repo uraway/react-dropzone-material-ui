@@ -18,7 +18,7 @@
         "start-example": "cd example && yarn start",
         "deploy-example": "cd example && yarn run deploy",
         "dev": "concurrently --kill-others \"yarn run build-watch\" \"yarn run start-example\"",
-        "test": "ts-node test/test.ts",
+        "test": "echo \"No test found\"",
         "pretest": "yarn run build",
         "prepublish": "yarn run build"
     },
