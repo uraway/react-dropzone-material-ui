@@ -30,6 +30,26 @@ jobs:
           root: ./
           paths:
             - node_modules
+  deploy_gh:
+    working_directory: ~/project/example
+    executor: linux
+    steps:
+      - checkout:
+          path: ~/project
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v1-dependencies-{{ .Branch }}
+      - run:
+          name: Install deps
+          command: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Test
+          command: yarn deploy
 
 workflows:
   version: 2
@@ -54,3 +74,6 @@ workflows:
             - run:
                 name: "パッケージをビルドする"
                 command: npm run build
+      - deploy_gh:
+          requires:
+            - publish-npm-package

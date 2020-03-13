@@ -6,6 +6,24 @@ This is a React component based on [react-dropzone](https://github.com/react-dro
 
 ![image](https://user-images.githubusercontent.com/15242484/60936510-e7278d80-a2ff-11e9-959b-8679f5350132.png)
 
+## Peer Dependencies
+
+Install React v16
+
+```
+$ yarn add react@16 react-dom@16
+```
+
+Install Matterial UI v4
+
+```
+$ yarn add @material-ui/core@4 @material-ui/icons@4 
+```
+
+```
+$ yarn add react-dropzone@10
+```
+
 ## Install
 
 ```
