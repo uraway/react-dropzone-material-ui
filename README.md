@@ -87,6 +87,20 @@ errorMessages={{
 
 ![image](https://user-images.githubusercontent.com/15242484/60937681-ded15180-a303-11e9-9360-b0a3cfda8d73.png)
 
+## Develpment
+
+Install modules in root and example
+
+```
+$ yarn run install-all
+```
+
+Start rollup & dev server
+
+```
+$ yarn run dev
+```
+
 ## License
 
 This project is licensed under the terms of the MIT license.
