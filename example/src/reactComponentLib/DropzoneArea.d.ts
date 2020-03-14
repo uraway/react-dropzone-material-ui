@@ -1,5 +1,6 @@
+import React from 'react';
 interface Props {
-    onChange: (files: File[]) => any;
+    onChange: (files: File[]) => void;
     filesLimit: number;
     acceptedFiles: string[];
     maxFileSize: number;
@@ -10,18 +11,5 @@ interface Props {
         maxFileSize: string;
     };
 }
-declare function DropzoneArea({ onChange, maxFileSize, acceptedFiles, filesLimit, errorMessages, dropzoneText, }: Props): JSX.Element;
-declare namespace DropzoneArea {
-    var defaultProps: {
-        acceptedFiles: string[];
-        filesLimit: number;
-        maxFileSize: number;
-        errorMessages: {
-            acceptedFiles: string;
-            filesLimit: string;
-            maxFileSize: string;
-        };
-        dropzoneText: string;
-    };
-}
+declare const DropzoneArea: React.SFC<Props>;
 export default DropzoneArea;

@@ -93,7 +93,7 @@ var useStyles = makeStyles(function (theme) { return ({
     },
 }); });
 var NO_PREVIEW = 'no_preview';
-function DropzoneArea(_a) {
+var DropzoneArea = function (_a) {
     var onChange = _a.onChange, maxFileSize = _a.maxFileSize, acceptedFiles = _a.acceptedFiles, filesLimit = _a.filesLimit, errorMessages = _a.errorMessages, dropzoneText = _a.dropzoneText;
     var classes = useStyles();
     var _b = useState([]), files = _b[0], setFiles = _b[1];
@@ -102,9 +102,11 @@ function DropzoneArea(_a) {
             alert(errorMessages.filesLimit);
         }
         else {
-            setFiles(newFiles.map(function (file) { return Object.assign(file, {
-                preview: file.type.includes('image') ? URL.createObjectURL(file) : NO_PREVIEW,
-            }); }));
+            setFiles(newFiles.map(function (file) {
+                return Object.assign(file, {
+                    preview: file.type.includes('image') ? URL.createObjectURL(file) : NO_PREVIEW,
+                });
+            }));
             onChange(newFiles);
         }
     };
@@ -124,21 +126,22 @@ function DropzoneArea(_a) {
         });
         alert(message);
     };
-    useEffect(function () { return function () {
+    var revokeObjectURL = function (files) {
         files.forEach(function (file) { return URL.revokeObjectURL(file.preview); });
-    }; }, [files]);
+    };
+    useEffect(function () { return revokeObjectURL(files); }, [files]);
     return (React.createElement(Dropzone, { onDrop: onDrop, onDropRejected: handleDropRejected, maxSize: maxFileSize, accept: acceptedFiles.join(',') }, function (_a) {
         var getRootProps = _a.getRootProps, getInputProps = _a.getInputProps;
         return (React.createElement("section", { className: classes.container },
             React.createElement("div", __assign({}, getRootProps({ className: classes.dropzone })),
                 React.createElement("input", __assign({}, getInputProps())),
                 React.createElement("p", null, dropzoneText)),
-            React.createElement("aside", { className: classes.thumbsContainer }, files.map(function (file, index) { return (React.createElement(Badge, { key: file.name, badgeContent: (React.createElement(Fab, { size: "small", className: classes.removeBtn, onClick: handleDelete(index) },
-                    React.createElement(DeleteIcon, null))) },
+            React.createElement("aside", { className: classes.thumbsContainer }, files.map(function (file, index) { return (React.createElement(Badge, { key: file.name, badgeContent: React.createElement(Fab, { size: "small", className: classes.removeBtn, onClick: handleDelete(index) },
+                    React.createElement(DeleteIcon, null)) },
                 React.createElement("div", { className: classes.thumb },
                     React.createElement("div", { className: classes.thumbInner }, file.preview === NO_PREVIEW ? (React.createElement(Typography, { className: classes.nopreview, variant: "h6" }, "No Preview")) : (React.createElement("img", { src: file.preview, className: classes.img, alt: "no preview" })))))); }))));
     }));
-}
+};
 DropzoneArea.defaultProps = {
     acceptedFiles: ['image/*', 'video/*', 'application/*'],
     filesLimit: 3,
@@ -150,6 +153,5 @@ DropzoneArea.defaultProps = {
     },
     dropzoneText: 'ファイルをドロップまたはファイルを選択する',
 };
-//# sourceMappingURL=DropzoneArea.js.map
 
 export default DropzoneArea;
