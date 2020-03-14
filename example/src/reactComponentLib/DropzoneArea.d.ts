@@ -1,4 +1,3 @@
-/// <reference types="react" />
 interface Props {
     onChange: (files: File[]) => any;
     filesLimit: number;
@@ -11,7 +10,7 @@ interface Props {
         maxFileSize: string;
     };
 }
-declare function DropzoneArea({ onChange, maxFileSize, acceptedFiles, filesLimit, errorMessages, dropzoneText }: Props): JSX.Element;
+declare function DropzoneArea({ onChange, maxFileSize, acceptedFiles, filesLimit, errorMessages, dropzoneText, }: Props): JSX.Element;
 declare namespace DropzoneArea {
     var defaultProps: {
         acceptedFiles: string[];

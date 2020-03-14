@@ -34,88 +34,86 @@ var __assign = function() {
 
 var useStyles = makeStyles(function (theme) { return ({
     container: {
-        display: "flex",
-        flexDirection: "column",
-        margin: theme.spacing(2)
+        display: 'flex',
+        flexDirection: 'column',
+        margin: theme.spacing(2),
     },
     dropzone: {
-        alignItems: "center",
-        backgroundColor: "#fafafa",
-        borderColor: "#eeeeee",
-        borderRadius: "2px",
-        borderStyle: "dashed",
-        borderWidth: "2px",
-        color: "#bdbdbd",
-        display: "flex",
-        flex: "1",
-        flexDirection: "column",
+        alignItems: 'center',
+        backgroundColor: '#fafafa',
+        borderColor: '#eeeeee',
+        borderRadius: '2px',
+        borderStyle: 'dashed',
+        borderWidth: '2px',
+        color: '#bdbdbd',
+        display: 'flex',
+        flex: '1',
+        flexDirection: 'column',
         marginBottom: theme.spacing(1),
-        outline: "none",
-        padding: "20px",
-        transition: "border .24s ease-in-out"
+        outline: 'none',
+        padding: '20px',
+        transition: 'border .24s ease-in-out',
     },
     img: {
-        display: "block",
-        width: "auto",
-        height: "100%"
+        display: 'block',
+        width: 'auto',
+        height: '100%',
     },
     thumb: {
-        display: "inline-flex",
+        display: 'inline-flex',
         borderRadius: 2,
-        border: "1px solid #eaeaea",
+        border: '1px solid #eaeaea',
         marginBottom: 8,
         marginRight: 8,
         width: 100,
         height: 100,
         padding: 4,
-        boxSizing: "border-box"
+        boxSizing: 'border-box',
     },
     thumbsContainer: {
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
         marginTop: 16,
-        "&:hover $removeBtn": { opacity: 1 }
+        '&:hover $removeBtn': { opacity: 1 },
     },
     thumbInner: {
-        display: "flex",
+        display: 'flex',
         minWidth: 0,
-        overflow: "hidden"
+        overflow: 'hidden',
     },
     removeBtn: {
         opacity: 0,
-        transition: ".5s ease"
+        transition: '.5s ease',
     },
     nopreview: {
-        textAlign: "center",
-        alignItems: "center",
-        display: "flex"
-    }
+        textAlign: 'center',
+        alignItems: 'center',
+        display: 'flex',
+    },
 }); });
-var NO_PREVIEW = "no_preview";
+var NO_PREVIEW = 'no_preview';
 function DropzoneArea(_a) {
     var onChange = _a.onChange, maxFileSize = _a.maxFileSize, acceptedFiles = _a.acceptedFiles, filesLimit = _a.filesLimit, errorMessages = _a.errorMessages, dropzoneText = _a.dropzoneText;
     var classes = useStyles();
     var _b = useState([]), files = _b[0], setFiles = _b[1];
+    var onDrop = function (newFiles) {
+        if (newFiles.length > filesLimit) {
+            alert(errorMessages.filesLimit);
+        }
+        else {
+            setFiles(newFiles.map(function (file) { return Object.assign(file, {
+                preview: file.type.includes('image') ? URL.createObjectURL(file) : NO_PREVIEW,
+            }); }));
+            onChange(newFiles);
+        }
+    };
     var handleDelete = function (index) { return function () {
         var newFiles = files.filter(function (_f, i) { return i !== index; });
         onDrop(newFiles);
     }; };
-    var onDrop = function (newFiles) {
-        if (newFiles.length > filesLimit) {
-            return alert(errorMessages.filesLimit);
-        }
-        setFiles(newFiles.map(function (file) {
-            return Object.assign(file, {
-                preview: file.type.includes("image")
-                    ? URL.createObjectURL(file)
-                    : NO_PREVIEW
-            });
-        }));
-        onChange(newFiles);
-    };
     var handleDropRejected = function (rejectedFiles) {
-        var message = "";
+        var message = '';
         rejectedFiles.forEach(function (rejectedFile) {
             if (!acceptedFiles.includes(rejectedFile.type)) {
                 message += errorMessages.acceptedFiles;
@@ -129,28 +127,29 @@ function DropzoneArea(_a) {
     useEffect(function () { return function () {
         files.forEach(function (file) { return URL.revokeObjectURL(file.preview); });
     }; }, [files]);
-    return (React.createElement(Dropzone, { onDrop: onDrop, onDropRejected: handleDropRejected, maxSize: maxFileSize, accept: acceptedFiles.join(",") }, function (_a) {
+    return (React.createElement(Dropzone, { onDrop: onDrop, onDropRejected: handleDropRejected, maxSize: maxFileSize, accept: acceptedFiles.join(',') }, function (_a) {
         var getRootProps = _a.getRootProps, getInputProps = _a.getInputProps;
         return (React.createElement("section", { className: classes.container },
             React.createElement("div", __assign({}, getRootProps({ className: classes.dropzone })),
                 React.createElement("input", __assign({}, getInputProps())),
                 React.createElement("p", null, dropzoneText)),
-            React.createElement("aside", { className: classes.thumbsContainer }, files.map(function (file, index) { return (React.createElement(Badge, { key: file.name, badgeContent: React.createElement(Fab, { size: "small", className: classes.removeBtn, onClick: handleDelete(index) },
-                    React.createElement(DeleteIcon, null)) },
+            React.createElement("aside", { className: classes.thumbsContainer }, files.map(function (file, index) { return (React.createElement(Badge, { key: file.name, badgeContent: (React.createElement(Fab, { size: "small", className: classes.removeBtn, onClick: handleDelete(index) },
+                    React.createElement(DeleteIcon, null))) },
                 React.createElement("div", { className: classes.thumb },
                     React.createElement("div", { className: classes.thumbInner }, file.preview === NO_PREVIEW ? (React.createElement(Typography, { className: classes.nopreview, variant: "h6" }, "No Preview")) : (React.createElement("img", { src: file.preview, className: classes.img, alt: "no preview" })))))); }))));
     }));
 }
 DropzoneArea.defaultProps = {
-    acceptedFiles: ["image/*", "video/*", "application/*"],
+    acceptedFiles: ['image/*', 'video/*', 'application/*'],
     filesLimit: 3,
     maxFileSize: 3000000,
     errorMessages: {
-        acceptedFiles: "ファイル形式をサポートしていません。",
-        filesLimit: "最大ファイル数を超えています。",
-        maxFileSize: "ファイルサイズが大きすぎます。"
+        acceptedFiles: 'ファイル形式をサポートしていません。',
+        filesLimit: '最大ファイル数を超えています。',
+        maxFileSize: 'ファイルサイズが大きすぎます。',
     },
-    dropzoneText: "ファイルをドロップまたはファイルを選択する"
+    dropzoneText: 'ファイルをドロップまたはファイルを選択する',
 };
+//# sourceMappingURL=DropzoneArea.js.map
 
 export default DropzoneArea;
