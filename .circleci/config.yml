@@ -1,0 +1,79 @@
+orbs:
+  npm-publisher: uraway/npm-publisher@0.1.0
+
+executors:
+  linux:
+    docker:
+      - image: circleci/node:12
+
+version: 2.1
+jobs:
+  lint-test:
+    executor: linux
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v1-dependencies-{{ .Branch }}
+      - run:
+          name: Install deps
+          command: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Test
+          command: yarn test
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - node_modules
+  deploy_gh:
+    working_directory: ~/project/example
+    executor: linux
+    steps:
+      - checkout:
+          path: ~/project
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v1-dependencies-{{ .Branch }}
+      - run:
+          name: Install deps
+          command: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Test
+          command: yarn deploy
+
+workflows:
+  version: 2
+  lint_test_publish:
+    jobs:
+      - lint-test
+      - npm-publisher/publish-from-package-version:
+          requires:
+            - lint-test
+          filters:
+            branches:
+              only: master
+          context: OSS
+          name: publish-npm-package
+          publish-token-variable: NPM_TOKEN
+          push-git-tag: true
+          ssh-fingerprints: 03:ca:73:30:f9:04:f5:cc:52:bd:6d:5e:57:c6:de:ec
+          pre-publish-steps:
+            - checkout
+            - attach_workspace:
+                at: ./
+            - run:
+                name: "パッケージをビルドする"
+                command: npm run build
+      - deploy_gh:
+          requires:
+            - publish-npm-package
