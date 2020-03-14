@@ -66,9 +66,8 @@ workflows:
           name: publish-npm-package
           publish-token-variable: NPM_TOKEN
           push-git-tag: true
-          ssh-fingerprints: 03:ca:73:30:f9:04:f5:cc:52:bd:6d:5e:57:c6:de:ec
+          ssh-fingerprints: b2:89:a1:c5:bd:10:f9:47:3f:67:c2:c2:91:47:0a:70
           pre-publish-steps:
-            - checkout
             - attach_workspace:
                 at: ./
             - run:
