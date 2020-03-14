@@ -1,10 +1,10 @@
-/* eslint no-alert: "off" */
 import { Badge, Typography } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import { Theme, makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useEffect, useState } from 'react';
 import Dropzone, { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone';
+import Snackbar, { SnackbarProps } from '@material-ui/core/Snackbar';
 
 interface Props {
     onChange: (files: File[]) => void;
@@ -17,6 +17,7 @@ interface Props {
         filesLimit: string;
         maxFileSize: string;
     };
+    snackbarProps?: SnackbarProps;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -93,13 +94,17 @@ const DropzoneArea: React.SFC<Props> = ({
     filesLimit,
     errorMessages,
     dropzoneText,
+    snackbarProps,
 }: Props) => {
     const classes = useStyles();
     const [files, setFiles] = useState<ExtendedFile[]>([]);
+    const [isSnackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarContent, setSnackbarContent] = useState<string | undefined>('');
 
     const onDrop = (newFiles: File[]): void => {
         if (filesLimit && newFiles.length > filesLimit) {
-            alert(errorMessages && errorMessages.filesLimit);
+            setSnackbarContent(errorMessages && errorMessages.filesLimit);
+            setSnackbarOpen(true);
         } else {
             setFiles(
                 newFiles.map(file =>
@@ -127,61 +132,69 @@ const DropzoneArea: React.SFC<Props> = ({
                 message += errorMessages && errorMessages.maxFileSize;
             }
         });
-        alert(message);
+        setSnackbarContent(message);
     };
 
     const revokeObjectURL = (files: ExtendedFile[]): void => {
-        files.forEach((file: ExtendedFile) => URL.revokeObjectURL(file.preview));
+        () => files.forEach((file: ExtendedFile) => URL.revokeObjectURL(file.preview));
     };
 
     useEffect(() => revokeObjectURL(files), [files]);
 
     return (
-        <Dropzone
-            onDrop={onDrop}
-            onDropRejected={handleDropRejected}
-            maxSize={maxFileSize}
-            accept={acceptedFiles && acceptedFiles.join(',')}
-        >
-            {({
-                getRootProps,
-                getInputProps,
-            }: {
-                getRootProps: (args: { className: string }) => DropzoneRootProps;
-                getInputProps: () => DropzoneInputProps;
-            }) => (
-                <section className={classes.container}>
-                    <div {...getRootProps({ className: classes.dropzone })}>
-                        <input {...getInputProps()} />
-                        <p>{dropzoneText && dropzoneText}</p>
-                    </div>
-                    <aside className={classes.thumbsContainer}>
-                        {files.map((file, index) => (
-                            <Badge
-                                key={file.name}
-                                badgeContent={
-                                    <Fab size="small" className={classes.removeBtn} onClick={handleDelete(index)}>
-                                        <DeleteIcon />
-                                    </Fab>
-                                }
-                            >
-                                <div className={classes.thumb}>
-                                    <div className={classes.thumbInner}>
-                                        {file.preview === NO_PREVIEW ? (
-                                            <Typography className={classes.nopreview} variant="h6">
-                                                No Preview
-                                            </Typography>
-                                        ) : (
-                                            <img src={file.preview} className={classes.img} alt="no preview" />
-                                        )}
+        <>
+            <Snackbar
+                {...snackbarProps}
+                open={isSnackbarOpen}
+                onClose={() => setSnackbarOpen(false)}
+                message={<span>{snackbarContent}</span>}
+            />
+            <Dropzone
+                onDrop={onDrop}
+                onDropRejected={handleDropRejected}
+                maxSize={maxFileSize}
+                accept={acceptedFiles && acceptedFiles.join(',')}
+            >
+                {({
+                    getRootProps,
+                    getInputProps,
+                }: {
+                    getRootProps: (args: { className: string }) => DropzoneRootProps;
+                    getInputProps: () => DropzoneInputProps;
+                }) => (
+                    <section className={classes.container}>
+                        <div {...getRootProps({ className: classes.dropzone })}>
+                            <input {...getInputProps()} />
+                            <p>{dropzoneText && dropzoneText}</p>
+                        </div>
+                        <aside className={classes.thumbsContainer}>
+                            {files.map((file, index) => (
+                                <Badge
+                                    key={file.name}
+                                    badgeContent={
+                                        <Fab size="small" className={classes.removeBtn} onClick={handleDelete(index)}>
+                                            <DeleteIcon />
+                                        </Fab>
+                                    }
+                                >
+                                    <div className={classes.thumb}>
+                                        <div className={classes.thumbInner}>
+                                            {file.preview === NO_PREVIEW ? (
+                                                <Typography className={classes.nopreview} variant="h6">
+                                                    No Preview
+                                                </Typography>
+                                            ) : (
+                                                <img src={file.preview} className={classes.img} alt="no preview" />
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
-                            </Badge>
-                        ))}
-                    </aside>
-                </section>
-            )}
-        </Dropzone>
+                                </Badge>
+                            ))}
+                        </aside>
+                    </section>
+                )}
+            </Dropzone>
+        </>
     );
 };
 
