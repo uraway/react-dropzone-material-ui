@@ -8,11 +8,11 @@ import Dropzone, { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
 
 interface Props {
     onChange: (files: File[]) => void;
-    filesLimit: number;
-    acceptedFiles: string[];
-    maxFileSize: number;
-    dropzoneText: string;
-    errorMessages: {
+    filesLimit?: number;
+    acceptedFiles?: string[];
+    maxFileSize?: number;
+    dropzoneText?: string;
+    errorMessages?: {
         acceptedFiles: string;
         filesLimit: string;
         maxFileSize: string;
@@ -98,8 +98,8 @@ const DropzoneArea: React.SFC<Props> = ({
     const [files, setFiles] = useState<ExtendedFile[]>([]);
 
     const onDrop = (newFiles: File[]): void => {
-        if (newFiles.length > filesLimit) {
-            alert(errorMessages.filesLimit);
+        if (filesLimit && newFiles.length > filesLimit) {
+            alert(errorMessages && errorMessages.filesLimit);
         } else {
             setFiles(
                 newFiles.map(file =>
@@ -120,11 +120,11 @@ const DropzoneArea: React.SFC<Props> = ({
     const handleDropRejected = (rejectedFiles: File[]): void => {
         let message = '';
         rejectedFiles.forEach(rejectedFile => {
-            if (!acceptedFiles.includes(rejectedFile.type)) {
-                message += errorMessages.acceptedFiles;
+            if (acceptedFiles && !acceptedFiles.includes(rejectedFile.type)) {
+                message += errorMessages && errorMessages.acceptedFiles;
             }
-            if (rejectedFile.size > maxFileSize) {
-                message += errorMessages.maxFileSize;
+            if (maxFileSize && rejectedFile.size > maxFileSize) {
+                message += errorMessages && errorMessages.maxFileSize;
             }
         });
         alert(message);
@@ -141,7 +141,7 @@ const DropzoneArea: React.SFC<Props> = ({
             onDrop={onDrop}
             onDropRejected={handleDropRejected}
             maxSize={maxFileSize}
-            accept={acceptedFiles.join(',')}
+            accept={acceptedFiles && acceptedFiles.join(',')}
         >
             {({
                 getRootProps,
@@ -153,7 +153,7 @@ const DropzoneArea: React.SFC<Props> = ({
                 <section className={classes.container}>
                     <div {...getRootProps({ className: classes.dropzone })}>
                         <input {...getInputProps()} />
-                        <p>{dropzoneText}</p>
+                        <p>{dropzoneText && dropzoneText}</p>
                     </div>
                     <aside className={classes.thumbsContainer}>
                         {files.map((file, index) => (

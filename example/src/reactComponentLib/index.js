@@ -98,8 +98,8 @@ var DropzoneArea = function (_a) {
     var classes = useStyles();
     var _b = useState([]), files = _b[0], setFiles = _b[1];
     var onDrop = function (newFiles) {
-        if (newFiles.length > filesLimit) {
-            alert(errorMessages.filesLimit);
+        if (filesLimit && newFiles.length > filesLimit) {
+            alert(errorMessages && errorMessages.filesLimit);
         }
         else {
             setFiles(newFiles.map(function (file) {
@@ -117,11 +117,11 @@ var DropzoneArea = function (_a) {
     var handleDropRejected = function (rejectedFiles) {
         var message = '';
         rejectedFiles.forEach(function (rejectedFile) {
-            if (!acceptedFiles.includes(rejectedFile.type)) {
-                message += errorMessages.acceptedFiles;
+            if (acceptedFiles && !acceptedFiles.includes(rejectedFile.type)) {
+                message += errorMessages && errorMessages.acceptedFiles;
             }
-            if (rejectedFile.size > maxFileSize) {
-                message += errorMessages.maxFileSize;
+            if (maxFileSize && rejectedFile.size > maxFileSize) {
+                message += errorMessages && errorMessages.maxFileSize;
             }
         });
         alert(message);
@@ -130,12 +130,12 @@ var DropzoneArea = function (_a) {
         files.forEach(function (file) { return URL.revokeObjectURL(file.preview); });
     };
     useEffect(function () { return revokeObjectURL(files); }, [files]);
-    return (React.createElement(Dropzone, { onDrop: onDrop, onDropRejected: handleDropRejected, maxSize: maxFileSize, accept: acceptedFiles.join(',') }, function (_a) {
+    return (React.createElement(Dropzone, { onDrop: onDrop, onDropRejected: handleDropRejected, maxSize: maxFileSize, accept: acceptedFiles && acceptedFiles.join(',') }, function (_a) {
         var getRootProps = _a.getRootProps, getInputProps = _a.getInputProps;
         return (React.createElement("section", { className: classes.container },
             React.createElement("div", __assign({}, getRootProps({ className: classes.dropzone })),
                 React.createElement("input", __assign({}, getInputProps())),
-                React.createElement("p", null, dropzoneText)),
+                React.createElement("p", null, dropzoneText && dropzoneText)),
             React.createElement("aside", { className: classes.thumbsContainer }, files.map(function (file, index) { return (React.createElement(Badge, { key: file.name, badgeContent: React.createElement(Fab, { size: "small", className: classes.removeBtn, onClick: handleDelete(index) },
                     React.createElement(DeleteIcon, null)) },
                 React.createElement("div", { className: classes.thumb },
