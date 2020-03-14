@@ -10,8 +10,8 @@ const App: React.FC = () => {
   }, [files]);
 
   return (
-    <div>
-      <Typography variant="h1">Sample</Typography>
+    <div style={{ textAlign:'center' }}>
+      <Typography variant="h5">react-dropzone-material-ui</Typography>
       <DropzoneArea
         onChange={setFiles}
         filesLimit={2}

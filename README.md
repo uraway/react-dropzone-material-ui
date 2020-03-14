@@ -87,7 +87,7 @@ errorMessages={{
 
   When a file is rejected, window alert will be evoked with these texts:
 
-![image](https://user-images.githubusercontent.com/15242484/60937681-ded15180-a303-11e9-9360-b0a3cfda8d73.png)
+![image](https://user-images.githubusercontent.com/15242484/76675883-2f1e5300-65f9-11ea-8aa6-af074299061f.png)
 
 ## Develpment
 
