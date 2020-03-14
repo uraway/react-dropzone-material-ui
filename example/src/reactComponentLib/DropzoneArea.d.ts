@@ -1,4 +1,5 @@
 import React from 'react';
+import { SnackbarProps } from '@material-ui/core/Snackbar';
 interface Props {
     onChange: (files: File[]) => void;
     filesLimit?: number;
@@ -10,6 +11,7 @@ interface Props {
         filesLimit: string;
         maxFileSize: string;
     };
+    snackbarProps?: SnackbarProps;
 }
 declare const DropzoneArea: React.SFC<Props>;
 export default DropzoneArea;

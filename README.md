@@ -20,8 +20,10 @@ Install Matterial UI v4
 $ yarn add @material-ui/core@4 @material-ui/icons@4 
 ```
 
+Install react-dropzone >=8
+
 ```
-$ yarn add react-dropzone@10
+$ yarn add react-dropzone
 ```
 
 ## Install
@@ -60,7 +62,7 @@ Currently supports only few props:
 | Name          | Type     | Default                                      | Description                                                                                                                                                                                    |
 | ------------- | -------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | acceptedFiles | string[] | ["image/*", "video/*", "application/*"]      | A list of file mime types user can add into the dropzone. ref: [Unique file type specifiers](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Unique_file_type_specifiers) |
-| dropzoneText  | string   | "ファイルをドロップまたはファイルを選択する" | Text in the dropzone.                                                                                                                                                                          |
+| dropzoneText  | string   | "Drag 'n' drop some files here, or click to select files" | Text in the dropzone.                                                                                                                                                                          |
 | errorMessages |          |                                              | see [errorMessages](#errorMessages) section below.                                                                                                                                             |
 | filesLimit    | number   | 3                                            | Number of files user can add into the dropzone.                                                                                                                                                |
 | maxFileSize   | number   | 3000000                                      | Maximum file size in bytes user can add into the dropzone.                                                                                                                                     |
@@ -85,7 +87,7 @@ errorMessages={{
 
   When a file is rejected, window alert will be evoked with these texts:
 
-![image](https://user-images.githubusercontent.com/15242484/60937681-ded15180-a303-11e9-9360-b0a3cfda8d73.png)
+![image](https://user-images.githubusercontent.com/15242484/76675883-2f1e5300-65f9-11ea-8aa6-af074299061f.png)
 
 ## Develpment
 

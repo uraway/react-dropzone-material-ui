@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useState, useEffect } from 'react';
 import Dropzone from 'react-dropzone';
+import Snackbar from '@material-ui/core/Snackbar';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -94,12 +95,15 @@ var useStyles = makeStyles(function (theme) { return ({
 }); });
 var NO_PREVIEW = 'no_preview';
 var DropzoneArea = function (_a) {
-    var onChange = _a.onChange, maxFileSize = _a.maxFileSize, acceptedFiles = _a.acceptedFiles, filesLimit = _a.filesLimit, errorMessages = _a.errorMessages, dropzoneText = _a.dropzoneText;
+    var onChange = _a.onChange, maxFileSize = _a.maxFileSize, acceptedFiles = _a.acceptedFiles, filesLimit = _a.filesLimit, errorMessages = _a.errorMessages, dropzoneText = _a.dropzoneText, snackbarProps = _a.snackbarProps;
     var classes = useStyles();
     var _b = useState([]), files = _b[0], setFiles = _b[1];
+    var _c = useState(false), isSnackbarOpen = _c[0], setSnackbarOpen = _c[1];
+    var _d = useState(''), snackbarContent = _d[0], setSnackbarContent = _d[1];
     var onDrop = function (newFiles) {
         if (filesLimit && newFiles.length > filesLimit) {
-            alert(errorMessages && errorMessages.filesLimit);
+            setSnackbarContent(errorMessages && errorMessages.filesLimit);
+            setSnackbarOpen(true);
         }
         else {
             setFiles(newFiles.map(function (file) {
@@ -124,34 +128,35 @@ var DropzoneArea = function (_a) {
                 message += errorMessages && errorMessages.maxFileSize;
             }
         });
-        alert(message);
+        setSnackbarContent(message);
     };
     var revokeObjectURL = function (files) {
-        files.forEach(function (file) { return URL.revokeObjectURL(file.preview); });
     };
-    useEffect(function () { return revokeObjectURL(files); }, [files]);
-    return (React.createElement(Dropzone, { onDrop: onDrop, onDropRejected: handleDropRejected, maxSize: maxFileSize, accept: acceptedFiles && acceptedFiles.join(',') }, function (_a) {
-        var getRootProps = _a.getRootProps, getInputProps = _a.getInputProps;
-        return (React.createElement("section", { className: classes.container },
-            React.createElement("div", __assign({}, getRootProps({ className: classes.dropzone })),
-                React.createElement("input", __assign({}, getInputProps())),
-                React.createElement("p", null, dropzoneText && dropzoneText)),
-            React.createElement("aside", { className: classes.thumbsContainer }, files.map(function (file, index) { return (React.createElement(Badge, { key: file.name, badgeContent: React.createElement(Fab, { size: "small", className: classes.removeBtn, onClick: handleDelete(index) },
-                    React.createElement(DeleteIcon, null)) },
-                React.createElement("div", { className: classes.thumb },
-                    React.createElement("div", { className: classes.thumbInner }, file.preview === NO_PREVIEW ? (React.createElement(Typography, { className: classes.nopreview, variant: "h6" }, "No Preview")) : (React.createElement("img", { src: file.preview, className: classes.img, alt: "no preview" })))))); }))));
-    }));
+    useEffect(function () { return revokeObjectURL(); }, [files]);
+    return (React.createElement(React.Fragment, null,
+        React.createElement(Snackbar, __assign({}, snackbarProps, { open: isSnackbarOpen, onClose: function () { return setSnackbarOpen(false); }, message: React.createElement("span", null, snackbarContent) })),
+        React.createElement(Dropzone, { onDrop: onDrop, onDropRejected: handleDropRejected, maxSize: maxFileSize, accept: acceptedFiles && acceptedFiles.join(',') }, function (_a) {
+            var getRootProps = _a.getRootProps, getInputProps = _a.getInputProps;
+            return (React.createElement("section", { className: classes.container },
+                React.createElement("div", __assign({}, getRootProps({ className: classes.dropzone })),
+                    React.createElement("input", __assign({}, getInputProps())),
+                    React.createElement("p", null, dropzoneText && dropzoneText)),
+                React.createElement("aside", { className: classes.thumbsContainer }, files.map(function (file, index) { return (React.createElement(Badge, { key: file.name, badgeContent: React.createElement(Fab, { size: "small", className: classes.removeBtn, onClick: handleDelete(index) },
+                        React.createElement(DeleteIcon, null)) },
+                    React.createElement("div", { className: classes.thumb },
+                        React.createElement("div", { className: classes.thumbInner }, file.preview === NO_PREVIEW ? (React.createElement(Typography, { className: classes.nopreview, variant: "h6" }, "No Preview")) : (React.createElement("img", { src: file.preview, className: classes.img, alt: "no preview" })))))); }))));
+        })));
 };
 DropzoneArea.defaultProps = {
     acceptedFiles: ['image/*', 'video/*', 'application/*'],
     filesLimit: 3,
     maxFileSize: 3000000,
     errorMessages: {
-        acceptedFiles: 'ファイル形式をサポートしていません。',
-        filesLimit: '最大ファイル数を超えています。',
-        maxFileSize: 'ファイルサイズが大きすぎます。',
+        acceptedFiles: 'File type is not supported.',
+        filesLimit: 'Maximun number of files are exceeded.',
+        maxFileSize: 'File size is too big.',
     },
-    dropzoneText: 'ファイルをドロップまたはファイルを選択する',
+    dropzoneText: "Drag 'n' drop some files here, or click to select files",
 };
 
 export default DropzoneArea;
