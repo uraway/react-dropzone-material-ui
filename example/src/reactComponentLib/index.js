@@ -152,11 +152,11 @@ DropzoneArea.defaultProps = {
     filesLimit: 3,
     maxFileSize: 3000000,
     errorMessages: {
-        acceptedFiles: 'ファイル形式をサポートしていません。',
-        filesLimit: '最大ファイル数を超えています。',
-        maxFileSize: 'ファイルサイズが大きすぎます。',
+        acceptedFiles: 'File type is not supported.',
+        filesLimit: 'Maximun number of files are exceeded.',
+        maxFileSize: 'File size is too big.',
     },
-    dropzoneText: 'ファイルをドロップまたはファイルを選択する',
+    dropzoneText: "Drag 'n' drop some files here, or click to select files",
 };
 
 export default DropzoneArea;
