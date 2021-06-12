@@ -1,5 +1,5 @@
 orbs:
-  npm-publisher: uraway/npm-publisher@0.1.0
+  npm-publisher: uraway/npm-publisher@0.2.0
 
 executors:
   linux:
